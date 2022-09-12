@@ -85,34 +85,66 @@ namespace AsteroidsGame.Warship
 
         private Vector2 MoveLooped(Vector2 nextPosition)
         {
-            var fromCamPosition = Camera.main.WorldToScreenPoint(_warshipTransform.position);
-                        if (fromCamPosition.x < 0)
-                        {
-                            var t = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth,
-                                fromCamPosition.y, 0));
-                            nextPosition.x =  t.x;
-                        }
-                        if (fromCamPosition.x > Camera.main.pixelWidth)
-                        {
-                            var t = Camera.main.ScreenToWorldPoint(new Vector3(0,
-                                fromCamPosition.y, 0));
-                            nextPosition.x = t.x;
-                        }
-                        
-                        if (fromCamPosition.y < 0)
-                        {
-                            var t = Camera.main.ScreenToWorldPoint(new Vector3(
-                                fromCamPosition.x, Camera.main.pixelHeight,0));
-                            nextPosition.y = t.y;
-                        }
-                        if (fromCamPosition.y > Camera.main.pixelHeight)
-                        {
-                            var t = Camera.main.ScreenToWorldPoint(new Vector3(
-                                fromCamPosition.x, 0,0));
-                            nextPosition.y = t.y;
-                        }
+            Vector3 upCameraWorldPosition;
+            Vector3 downCameraWorldPosition;
 
-                        return nextPosition;
+            var mainCamera = Camera.main;
+            upCameraWorldPosition =
+                Camera.main.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, 0));
+            downCameraWorldPosition=     
+                Camera.main.ScreenToWorldPoint(new Vector3( upCameraWorldPosition.x-upCameraWorldPosition.x*2, upCameraWorldPosition.y-upCameraWorldPosition.y*2, 0));
+
+            // nextPosition.x = Mathf.Repeat(nextPosition.x, upCameraWorldPosition.x);
+            // nextPosition.y = Mathf.Repeat(nextPosition.y, upCameraWorldPosition.y);
+            
+            if (_warshipTransform.position.x  > upCameraWorldPosition.x)
+            {
+                nextPosition.x = downCameraWorldPosition.x;
+            }
+            
+            if (_warshipTransform.position.x < downCameraWorldPosition.x)
+            {
+                nextPosition.x = upCameraWorldPosition.x;
+            }
+            
+            if (_warshipTransform.position.y > upCameraWorldPosition.y)
+            {
+                nextPosition.y = downCameraWorldPosition.y;
+            }
+            
+            if (_warshipTransform.position.y < downCameraWorldPosition.y)
+            {
+                nextPosition.y = upCameraWorldPosition.y;
+            }
+
+            // var fromCamPosition = Camera.main.WorldToScreenPoint(_warshipTransform.position);
+                        // if (fromCamPosition.x < 0)
+                        // {
+                        //     var t = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth,
+                        //         fromCamPosition.y, 0));
+                        //     nextPosition.x =  t.x;
+                        // }
+                        // if (fromCamPosition.x > Camera.main.pixelWidth)
+                        // {
+                        //     var t = Camera.main.ScreenToWorldPoint(new Vector3(0,
+                        //         fromCamPosition.y, 0));
+                        //     nextPosition.x = t.x;
+                        // }
+                        
+                        // if (fromCamPosition.y < 0)
+                        // {
+                        //     var t = Camera.main.ScreenToWorldPoint(new Vector3(
+                        //         fromCamPosition.x, Camera.main.pixelHeight,0));
+                        //     nextPosition.y = t.y;
+                        // }
+                        // if (fromCamPosition.y > Camera.main.pixelHeight)
+                        // {
+                        //     var t = Camera.main.ScreenToWorldPoint(new Vector3(
+                        //         fromCamPosition.x, 0,0));
+                        //     nextPosition.y = t.y;
+                        // }
+                        
+            return nextPosition;
         }
     }
 }
