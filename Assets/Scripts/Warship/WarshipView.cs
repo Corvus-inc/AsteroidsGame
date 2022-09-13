@@ -11,6 +11,5 @@ namespace AsteroidsGame.Warship
 {
     public class WarshipView : MonoBehaviour
     {
-        
     }
 }

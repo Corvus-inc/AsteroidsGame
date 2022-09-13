@@ -8,8 +8,8 @@ namespace AsteroidsGame.Warship
     public class Inertia : IInertia
 
     {
-        private readonly float _unitsPerSecond = 0.05f;
-        private readonly float _maxSpeed = 0.05f;
+        private readonly float _unitsPerSecond = 0.1f;
+        private readonly float _maxSpeed = 0.1f;
         private readonly float _secondsToStop = 1f;
         //TODO Added class Speed modifier
         private float _currentSpeed; 
@@ -18,7 +18,7 @@ namespace AsteroidsGame.Warship
         public void Accelerate(Vector2 forward, float deltaTime)
         {
             //Interpolated speed from zero
-            var speed = Mathf.Lerp(_currentSpeed, _unitsPerSecond, 0.05f);
+            var speed = Mathf.Lerp(_currentSpeed, _unitsPerSecond, 0.1f);
             _currentSpeed = speed;
             //Finding vector acceleration by direction and speed
             Acceleration += forward * (_currentSpeed * deltaTime);
