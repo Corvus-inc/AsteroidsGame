@@ -9,20 +9,24 @@ namespace AsteroidsGame.Warship
     public class WarshipMovement
     {
         private readonly Transform _warshipTransform;
-        private CameraBorders _cameraBorders;
+        private readonly CameraBorders _cameraBorders;
         private readonly Inertia _inertia;
+        private readonly WarshipMovementModel _model;
+
         private Vector2 _position;
 
 
         private Vector2 Forward => _warshipTransform.rotation * Vector3.up;
+        
+        //Useful trigonometry for finding direction
+        // public Vector2 ForwardV2 => Trigonometry.UnityDegreeToVector2(_warshipTransform.rotation.z);
 
-        public Vector2 ForwardV2 => Trigonometry.UnityDegreeToVector2(_warshipTransform.rotation.z);
-
-        public WarshipMovement(Transform warshipTransform, CameraBorders cameraBorders)
+        public WarshipMovement(Transform warshipTransform, CameraBorders cameraBorders, WarshipMovementModel model)
         {
             _cameraBorders = cameraBorders;
             _warshipTransform = warshipTransform;
-            _inertia = new Inertia();
+            _model = model;
+            _inertia = new Inertia(_model);
         }
 
         public void Move(bool isAccelerate)
@@ -35,13 +39,10 @@ namespace AsteroidsGame.Warship
             {
                 _inertia.Slowdown(Time.deltaTime);
             }
-
-
+            
             var nextPosition = (_position + _inertia.Acceleration);
 
             nextPosition = MoveLooped(nextPosition);
-            // nextPosition.x = Mathf.Repeat(nextPosition.x, 10);
-            // nextPosition.y = Mathf.Repeat(nextPosition.y, 10);
 
             _position = nextPosition;
 
@@ -63,7 +64,7 @@ namespace AsteroidsGame.Warship
         public void TryRotate(float direction)
         {
             if (direction != 0)
-                MoveRotate(direction, 3);
+                MoveRotate(direction, _model.SpeedRotate);
         }
 
         private void MoveRotate(float direction, float speed)
@@ -76,24 +77,13 @@ namespace AsteroidsGame.Warship
             _warshipTransform.Rotate(new Vector3(0, 0, -direction * speed));
         }
 
-        private Vector2 _velocity;
-        private Vector2 _lastPosition;
-        private float _lastDeltaTime;
-
-        private void CalculateVelocity()
-        {
-            _velocity = ((Vector2) _position - _lastPosition) / _lastDeltaTime;
-            _lastPosition = _position;
-            _lastDeltaTime = Time.deltaTime;
-        }
-
         private Vector2 MoveLooped(Vector2 nextPosition)
         {
             var rightBorder = _cameraBorders.UpperRightInWorld.x;
             var upperBorder = _cameraBorders.UpperRightInWorld.y;
             var leftBorder = _cameraBorders.LeftLowerInWorld.x;
             var downBorder = _cameraBorders.LeftLowerInWorld.y;
-            
+
             if (_warshipTransform.position.x > rightBorder)
             {
                 nextPosition.x = leftBorder;
@@ -116,5 +106,17 @@ namespace AsteroidsGame.Warship
 
             return nextPosition;
         }
+
+        //Calculated velocity attempt
+        // private Vector2 _velocity;
+        // private Vector2 _lastPosition;
+        // private float _lastDeltaTime;
+        
+        // private void CalculateVelocity()
+        // {
+        //     _velocity = ((Vector2) _position - _lastPosition) / _lastDeltaTime;
+        //     _lastPosition = _position;
+        //     _lastDeltaTime = Time.deltaTime;
+        // }
     }
 }

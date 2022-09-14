@@ -11,20 +11,9 @@ namespace AsteroidsGame.Warship
 {
     public class Warship
     {
-        public float speed=5;
-        private float _speed;
-
-        private Vector2 _velocity;
-        private float _lastTime;
-        private Vector2 _lastPos;
-        private Vector2 _lastDir;
-        
-        private float startDir;
-        private float dragAngle;
-
-        private WarshipMovement _warshipMovement;
-        private PlayerInputController _playerInputController;
-        private StateMovement _stateMovement;
+        private readonly WarshipMovement _warshipMovement;
+        private readonly PlayerInputController _playerInputController;
+        private readonly StateMovement _stateMovement;
         
         public Warship(WarshipMovement warshipMovement, PlayerInputController playerInputController)
         {
