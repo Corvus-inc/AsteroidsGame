@@ -8,7 +8,7 @@ namespace Assets.Tools
         public Vector3 UpperRightInWorld { get; private set; }
         public Vector3 LeftLowerInWorld { get; private set; }
         
-        private const float RateOfUpdateBorders = 0.3f;
+        private const float RATE_OF_UPDATE_BORDERS = 0.3f;
         
         private Camera _currentCamera;
         private bool _stay = true;
@@ -33,7 +33,7 @@ namespace Assets.Tools
                     Debug.Log(UpperRightInWorld);
                 }
 
-                yield return new WaitForSeconds(RateOfUpdateBorders);
+                yield return new WaitForSeconds(RATE_OF_UPDATE_BORDERS);
             }
         }
 

@@ -8,14 +8,14 @@ namespace AsteroidsGame.Warship
 {
     public class WarshipMovement
     {
+        private readonly Inertia _inertia;
+        
+        private readonly WarshipMovementModel _model;
         private readonly Transform _warshipTransform;
         private readonly CameraBorders _cameraBorders;
-        private readonly Inertia _inertia;
-        private readonly WarshipMovementModel _model;
 
         private Vector2 _position;
-
-
+        
         private Vector2 Forward => _warshipTransform.rotation * Vector3.up;
         
         //Useful trigonometry for finding direction
