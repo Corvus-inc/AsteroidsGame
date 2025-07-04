@@ -79,7 +79,7 @@ crashlytics-build.properties
 # Packed Addressables
 /[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
 
-# Temporary Android streaming assets
+# Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
@@ -92,3 +92,6 @@ Desktop.ini        # Windows explorer settings
 ._*                # macOS resource forks
 .Spotlight-V100
 .Trashes
+Assets/Polytope Studio/Lowpoly_Environments.meta
+Assets/Polytope Studio/Lowpoly_Environments/URP.meta
+Assets/Polytope Studio.meta
